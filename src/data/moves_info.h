@@ -15959,8 +15959,8 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .priority = 0,
         .category = DAMAGE_CATEGORY_PHYSICAL,
         .additionalEffects = ADDITIONAL_EFFECTS({
-            .moveEffect = MOVE_EFFECT_PREVENT_ESCAPE,
-            .chance = 100,
+            .moveEffect = MOVE_EFFECT_WRAP,
+            .multistring.wrapped = B_MSG_WRAPPED_SPIRIT_SHACKLE,
         }),
         .contestEffect = CONTEST_EFFECT_BADLY_STARTLE_MONS_WITH_GOOD_APPEALS,
         .contestCategory = CONTEST_CATEGORY_SMART,

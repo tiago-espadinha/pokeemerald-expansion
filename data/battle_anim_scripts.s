@@ -31134,6 +31134,7 @@ gBattleAnimGeneral_TurnTrap::
 	jumpargeq 0, TRAP_ANIM_INFESTATION, Status_Infestation
 	jumpargeq 0, TRAP_ANIM_SNAP_TRAP, Status_Snap_Trap
 	jumpargeq 0, TRAP_ANIM_THUNDER_CAGE, Status_Thunder_Cage
+	jumpargeq 0, TRAP_ANIM_SPIRIT_SHACKLE, Status_Spirit_Shackle
 	goto Status_BindWrap
 Status_BindWrap:
 	loadspritegfx ANIM_TAG_TENDRILS
@@ -31182,6 +31183,31 @@ Status_MagmaStorm:
 	waitbgfadein
 	stopsound
 	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+
+Status_Spirit_Shackle:
+	loadspritegfx ANIM_TAG_SPIRIT_ARROW @Arrow
+	loadspritegfx ANIM_TAG_PURPLE_CHAIN
+	createvisualtask AnimTask_BlendParticle, 5, ANIM_TAG_PURPLE_CHAIN, 0, 9, 9, RGB_BLACK
+	monbg ANIM_TARGET
+	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
+	createsprite gSpiritShackleArrowTemplate, ANIM_TARGET, 2, 16, 0, 0, 0, 15
+	delay 8
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 10, 1
+	waitforvisualfinish
+	loopsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET, 6, 2
+	createsprite gChainBindingSpriteTemplate, ANIM_TARGET, 4, 0, 16, 0, 1
+	delay 7
+	createsprite gChainBindingSpriteTemplate, ANIM_TARGET, 2, 0, 8, 1, 1
+	delay 3
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
+	delay 20
+	setarg 7, 0xFFFF
+	playsewithpan SE_M_BIND, SOUND_PAN_TARGET
+	waitforvisualfinish
+	stopsound
+	clearmonbg ANIM_TARGET
 	blendoff
 	end
 
