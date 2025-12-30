@@ -130,7 +130,7 @@ static bool32 DoesAbilityBenefitFromWeather(u32 ability, u32 weather)
     switch (ability)
     {
     case ABILITY_FORECAST:
-        return (weather & (B_WEATHER_RAIN | B_WEATHER_SUN | B_WEATHER_ICY_ANY));
+        return (weather & (B_WEATHER_RAIN | B_WEATHER_SUN | B_WEATHER_ICY_ANY | B_WEATHER_SANDSTORM));
     case ABILITY_MAGIC_GUARD:
     case ABILITY_OVERCOAT:
         return (weather & B_WEATHER_DAMAGING_ANY);

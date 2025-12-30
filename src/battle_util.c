@@ -3834,6 +3834,47 @@ u32 AbilityBattleEffects(u32 caseID, u32 battler, u32 ability, u32 special, u32 
                 effect++;
             }
             break;
+            case ABILITY_FORECAST:
+            // checks if user is holding a damp rock it sets rain like the drizzle ability, likewise for the remaing weather stones
+            if (GetBattlerHoldEffectIgnoreAbility(battler, TRUE) == HOLD_EFFECT_DAMP_ROCK)
+            {
+                if (TryChangeBattleWeather(battler, BATTLE_WEATHER_RAIN, TRUE))
+                {
+                    BattleScriptPushCursorAndCallback(BattleScript_DrizzleActivates);
+                    effect++;
+                }
+            }
+            else if (GetBattlerHoldEffectIgnoreAbility(battler, TRUE) == HOLD_EFFECT_HEAT_ROCK)
+            {
+                if (TryChangeBattleWeather(battler, BATTLE_WEATHER_SUN, TRUE))
+                {
+                    BattleScriptPushCursorAndCallback(BattleScript_DroughtActivates);
+                    effect++;
+                }
+            }
+            else if (GetBattlerHoldEffectIgnoreAbility(battler, TRUE) == HOLD_EFFECT_ICY_ROCK)
+            {
+                if (GetGenConfig(GEN_SNOW_WARNING) >= GEN_9 && TryChangeBattleWeather(battler, BATTLE_WEATHER_SNOW, TRUE))
+                {
+                    BattleScriptPushCursorAndCallback(BattleScript_SnowWarningActivatesSnow);
+                    effect++;
+                }
+                else if (GetGenConfig(GEN_SNOW_WARNING) < GEN_9 && TryChangeBattleWeather(battler, BATTLE_WEATHER_HAIL, TRUE))
+                {
+                    BattleScriptPushCursorAndCallback(BattleScript_SnowWarningActivatesHail);
+                    effect++;
+                }
+            }
+            else if (GetBattlerHoldEffectIgnoreAbility(battler, TRUE) == HOLD_EFFECT_SMOOTH_ROCK)
+            {
+                if (TryChangeBattleWeather(battler, BATTLE_WEATHER_SANDSTORM, TRUE))
+                {
+                    BattleScriptPushCursorAndCallback(BattleScript_SandstreamActivates);
+                    effect++;
+                }
+            }
+            break;
+
         case ABILITY_DRIZZLE:
             if (TryChangeBattleWeather(battler, BATTLE_WEATHER_RAIN, TRUE))
             {
