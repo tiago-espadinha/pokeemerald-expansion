@@ -3245,7 +3245,7 @@ static u8 CreateContestantSprite(u16 species, bool8 isShiny, u32 personality, u3
 
 bool8 IsSpeciesNotUnown(u16 species)
 {
-    if (species == SPECIES_UNOWN)
+    if (species == SPECIES_UNOWN || species == SPECIES_UNOWN_PRIME)
         return FALSE;
     else
         return TRUE;

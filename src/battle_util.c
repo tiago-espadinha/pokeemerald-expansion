@@ -4168,6 +4168,17 @@ u32 AbilityBattleEffects(u32 caseID, u32 battler, u32 ability, u32 special, u32 
                 effect++;
             }
             break;
+        case ABILITY_POWER_OF_WORDS:
+            if (!gSpecialStatuses[battler].switchInAbilityDone
+             && (gBattleMons[battler].species >= SPECIES_UNOWN_PRIME && gBattleMons[battler].species <= SPECIES_UNOWN_PRIME_QUESTION)
+             && TryBattleFormChange(battler, FORM_CHANGE_BATTLE_SWITCH))
+            {
+                gBattleScripting.abilityPopupOverwrite = gLastUsedAbility = ABILITY_POWER_OF_WORDS;
+                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
+                BattleScriptPushCursorAndCallback(BattleScript_BattlerFormChangeWithStringEnd3);
+                effect++;
+            }
+            break;
         case ABILITY_ICE_FACE:
             if (IsBattlerWeatherAffected(battler, B_WEATHER_HAIL | B_WEATHER_SNOW)
              && gBattleMons[battler].species == SPECIES_EISCUE_NOICE

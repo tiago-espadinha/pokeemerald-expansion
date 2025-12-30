@@ -187,7 +187,7 @@ u8 CreateMonIconNoPersonality(u16 species, void (*callback)(struct Sprite *), s1
 u16 GetIconSpecies(u16 species, u32 personality)
 {
     species = SanitizeSpeciesId(species);
-    if (species == SPECIES_UNOWN)
+    if (species == SPECIES_UNOWN || species == SPECIES_UNOWN_PRIME)
         species = GetUnownSpeciesId(personality);
     return species;
 }

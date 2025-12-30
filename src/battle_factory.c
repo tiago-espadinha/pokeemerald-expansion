@@ -335,7 +335,7 @@ static void GenerateOpponentMons(void)
         u16 monId = GetFactoryMonId(lvlMode, challengeNum, FALSE);
 
         // Unown (FRONTIER_MON_UNOWN) is forbidden on opponent Factory teams.
-        if (gFacilityTrainerMons[monId].species == SPECIES_UNOWN)
+        if (gFacilityTrainerMons[monId].species == SPECIES_UNOWN || gFacilityTrainerMons[monId].species == SPECIES_UNOWN_PRIME)
             continue;
 
         // Ensure none of the opponent's Pokémon are the same as the potential rental Pokémon for the player
@@ -501,7 +501,7 @@ static void GenerateInitialRentalMons(void)
         else
             monId = GetFactoryMonId(factoryLvlMode, challengeNum, FALSE);
 
-        if (gFacilityTrainerMons[monId].species == SPECIES_UNOWN)
+        if (gFacilityTrainerMons[monId].species == SPECIES_UNOWN || gFacilityTrainerMons[monId].species == SPECIES_UNOWN_PRIME)
             continue;
 
         // Cannot have two Pokémon of the same species.
@@ -719,7 +719,7 @@ void FillFactoryBrainParty(void)
     {
         u16 monId = GetFactoryMonId(lvlMode, challengeNum, FALSE);
 
-        if (gFacilityTrainerMons[monId].species == SPECIES_UNOWN)
+        if (gFacilityTrainerMons[monId].species == SPECIES_UNOWN || gFacilityTrainerMons[monId].species == SPECIES_UNOWN_PRIME)
             continue;
         if (monLevel == FRONTIER_MAX_LEVEL_50 && monId > FRONTIER_MONS_HIGH_TIER)
             continue;

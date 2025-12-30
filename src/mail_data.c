@@ -82,7 +82,7 @@ u8 GiveMailToMonByItemId(struct Pokemon *mon, u16 itemId)
 
 u16 SpeciesToMailSpecies(u16 species, u32 personality)
 {
-    if (species == SPECIES_UNOWN)
+    if (species == SPECIES_UNOWN || species == SPECIES_UNOWN_PRIME)
     {
         u32 species = GetUnownLetterByPersonality(personality) + UNOWN_OFFSET;
         return species;

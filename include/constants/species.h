@@ -1638,7 +1638,39 @@
 #define SPECIES_MIMIKYU_BUSTED_TOTEM                    1523
 #define SPECIES_MIMIKYU_TOTEM_BUSTED                    SPECIES_MIMIKYU_BUSTED_TOTEM
 
-#define SPECIES_EGG                                     (SPECIES_MIMIKYU_BUSTED_TOTEM + 1)
+#define SPECIES_UNOWN_PRIME                             1524
+#define SPECIES_UNOWN_PRIME_B                           1525
+#define SPECIES_UNOWN_PRIME_C                           1526
+#define SPECIES_UNOWN_PRIME_D                           1527
+#define SPECIES_UNOWN_PRIME_E                           1528
+#define SPECIES_UNOWN_PRIME_F                           1529
+#define SPECIES_UNOWN_PRIME_G                           1530
+#define SPECIES_UNOWN_PRIME_H                           1531
+#define SPECIES_UNOWN_PRIME_I                           1532
+#define SPECIES_UNOWN_PRIME_J                           1533
+#define SPECIES_UNOWN_PRIME_K                           1534
+#define SPECIES_UNOWN_PRIME_L                           1535
+#define SPECIES_UNOWN_PRIME_M                           1536
+#define SPECIES_UNOWN_PRIME_N                           1537
+#define SPECIES_UNOWN_PRIME_O                           1538
+#define SPECIES_UNOWN_PRIME_P                           1539
+#define SPECIES_UNOWN_PRIME_Q                           1540
+#define SPECIES_UNOWN_PRIME_R                           1541
+#define SPECIES_UNOWN_PRIME_S                           1542
+#define SPECIES_UNOWN_PRIME_T                           1543
+#define SPECIES_UNOWN_PRIME_U                           1544
+#define SPECIES_UNOWN_PRIME_V                           1545
+#define SPECIES_UNOWN_PRIME_W                           1546
+#define SPECIES_UNOWN_PRIME_X                           1547
+#define SPECIES_UNOWN_PRIME_Y                           1548
+#define SPECIES_UNOWN_PRIME_Z                           1549
+#define SPECIES_UNOWN_PRIME_EXCLAMATION                 1550
+#define SPECIES_UNOWN_PRIME_QUESTION                    1551
+#define SPECIES_UNOWN_PRIME_FINAL                       1552
+
+
+
+#define SPECIES_EGG                                     (SPECIES_UNOWN_PRIME_FINAL + 1)
 
 #define NUM_SPECIES SPECIES_EGG
 

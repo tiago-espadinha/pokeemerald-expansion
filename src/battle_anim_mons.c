@@ -147,7 +147,7 @@ u8 GetBattlerYDelta(u8 battler, u16 species)
 
     if (IsContest())
     {
-        if (species == SPECIES_UNOWN)
+        if (species == SPECIES_UNOWN || species == SPECIES_UNOWN_PRIME)
         {
             if (gContestResources->moveAnim->hasTargetAnim)
                 personality = gContestResources->moveAnim->targetPersonality;
@@ -158,7 +158,7 @@ u8 GetBattlerYDelta(u8 battler, u16 species)
     }
     else
     {
-        if (species == SPECIES_UNOWN)
+        if (species == SPECIES_UNOWN || species == SPECIES_UNOWN_PRIME)
         {
             spriteInfo = gBattleSpritesDataPtr->battlerData;
             if (!spriteInfo[battler].transformSpecies)
@@ -2105,7 +2105,7 @@ s16 GetBattlerSpriteCoordAttr(u8 battler, u8 attr)
             personality = gContestResources->moveAnim->personality;
         }
         species = SanitizeSpeciesId(species);
-        if (species == SPECIES_UNOWN)
+        if (species == SPECIES_UNOWN || species == SPECIES_UNOWN_PRIME)
             species = GetUnownSpeciesId(personality);
         size = gSpeciesInfo[species].backPicSize;
         y_offset = gSpeciesInfo[species].backPicYOffset;
@@ -2127,7 +2127,7 @@ s16 GetBattlerSpriteCoordAttr(u8 battler, u8 attr)
         }
 
         species = SanitizeSpeciesId(species);
-        if (species == SPECIES_UNOWN)
+        if (species == SPECIES_UNOWN || species == SPECIES_UNOWN_PRIME)
             species = GetUnownSpeciesId(personality);
 
         if (IsOnPlayerSide(battler))
