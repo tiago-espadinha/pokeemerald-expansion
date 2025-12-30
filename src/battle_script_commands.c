@@ -8065,6 +8065,7 @@ static void Cmd_handlelearnnewmove(void)
             && !(gBattleMons[battler].volatiles.transformed))
         {
             GiveMoveToBattleMon(&gBattleMons[battler], learnMove);
+            TryBattleFormChange(battler, FORM_CHANGE_MOVE);
         }
         if (IsDoubleBattle())
         {
@@ -8073,6 +8074,7 @@ static void Cmd_handlelearnnewmove(void)
                 && !(gBattleMons[battler].volatiles.transformed))
             {
                 GiveMoveToBattleMon(&gBattleMons[battler], learnMove);
+                TryBattleFormChange(battler, FORM_CHANGE_MOVE);
             }
         }
 

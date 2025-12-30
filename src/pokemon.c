@@ -1820,6 +1820,33 @@ u16 GiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move)
             u32 pp = GetMovePP(move);
             SetBoxMonData(boxMon, MON_DATA_MOVE1 + i, &move);
             SetBoxMonData(boxMon, MON_DATA_PP1 + i, &pp);
+
+            // If this BoxPokemon belongs to a party member, trigger overworld and battle form changes
+            int partyIdx;
+            for (partyIdx = 0; partyIdx < PARTY_SIZE; partyIdx++)
+            {
+                if (&gPlayerParty[partyIdx].box == boxMon)
+                {
+                    TryFormChange(partyIdx, B_SIDE_PLAYER, FORM_CHANGE_MOVE);
+                    for (u32 battler = 0; battler < MAX_BATTLERS_COUNT; battler++)
+                    {
+                        if (gBattlerPartyIndexes[battler] == partyIdx && GetBattlerSide(battler) == B_SIDE_PLAYER)
+                            TryBattleFormChange(battler, FORM_CHANGE_MOVE);
+                    }
+                    break;
+                }
+                if (&gEnemyParty[partyIdx].box == boxMon)
+                {
+                    TryFormChange(partyIdx, B_SIDE_OPPONENT, FORM_CHANGE_MOVE);
+                    for (u32 battler = 0; battler < MAX_BATTLERS_COUNT; battler++)
+                    {
+                        if (gBattlerPartyIndexes[battler] == partyIdx && GetBattlerSide(battler) == B_SIDE_OPPONENT)
+                            TryBattleFormChange(battler, FORM_CHANGE_MOVE);
+                    }
+                    break;
+                }
+            }
+
             return move;
         }
         if (existingMove == move)
@@ -1847,10 +1874,42 @@ u16 GiveMoveToBattleMon(struct BattlePokemon *mon, u16 move)
 
 void SetMonMoveSlot(struct Pokemon *mon, u16 move, u8 slot)
 {
+    u16 oldMove = GetMonData(mon, MON_DATA_MOVE1 + slot, NULL);
     SetMonData(mon, MON_DATA_MOVE1 + slot, &move);
     u32 pp = GetMovePP(move);
     SetMonData(mon, MON_DATA_PP1 + slot, &pp);
-}
+
+    if (oldMove != move)
+    {
+        int i;
+        // Check player party
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (&gPlayerParty[i] == mon)
+            {
+                // Overworld form change
+                TryFormChange(i, B_SIDE_PLAYER, FORM_CHANGE_MOVE);
+                // If this mon is active in battle, trigger battle form change
+                for (u32 battler = 0; battler < MAX_BATTLERS_COUNT; battler++)
+                {
+                    if (gBattlerPartyIndexes[battler] == i && GetBattlerSide(battler) == B_SIDE_PLAYER)
+                        TryBattleFormChange(battler, FORM_CHANGE_MOVE);
+                }
+                break;
+            }
+            if (&gEnemyParty[i] == mon)
+            {
+                TryFormChange(i, B_SIDE_OPPONENT, FORM_CHANGE_MOVE);
+                for (u32 battler = 0; battler < MAX_BATTLERS_COUNT; battler++)
+                {
+                    if (gBattlerPartyIndexes[battler] == i && GetBattlerSide(battler) == B_SIDE_OPPONENT)
+                        TryBattleFormChange(battler, FORM_CHANGE_MOVE);
+                }
+                break;
+            }
+        }
+    }
+} 
 
 static void SetMonMoveSlot_KeepPP(struct Pokemon *mon, u16 move, u8 slot)
 {
@@ -1859,8 +1918,38 @@ static void SetMonMoveSlot_KeepPP(struct Pokemon *mon, u16 move, u8 slot)
     u8 newPP = CalculatePPWithBonus(move, ppBonuses, slot);
     u16 finalPP = min(currPP, newPP);
 
+    u16 oldMove = GetMonData(mon, MON_DATA_MOVE1 + slot, NULL);
     SetMonData(mon, MON_DATA_MOVE1 + slot, &move);
     SetMonData(mon, MON_DATA_PP1 + slot, &finalPP);
+
+    if (oldMove != move)
+    {
+        int i;
+        // Check player party
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (&gPlayerParty[i] == mon)
+            {
+                TryFormChange(i, B_SIDE_PLAYER, FORM_CHANGE_MOVE);
+                for (u32 battler = 0; battler < MAX_BATTLERS_COUNT; battler++)
+                {
+                    if (gBattlerPartyIndexes[battler] == i && GetBattlerSide(battler) == B_SIDE_PLAYER)
+                        TryBattleFormChange(battler, FORM_CHANGE_MOVE);
+                }
+                break;
+            }
+            if (&gEnemyParty[i] == mon)
+            {
+                TryFormChange(i, B_SIDE_OPPONENT, FORM_CHANGE_MOVE);
+                for (u32 battler = 0; battler < MAX_BATTLERS_COUNT; battler++)
+                {
+                    if (gBattlerPartyIndexes[battler] == i && GetBattlerSide(battler) == B_SIDE_OPPONENT)
+                        TryBattleFormChange(battler, FORM_CHANGE_MOVE);
+                }
+                break;
+            }
+        }
+    }
 }
 
 void SetBattleMonMoveSlot(struct BattlePokemon *mon, u16 move, u8 slot)

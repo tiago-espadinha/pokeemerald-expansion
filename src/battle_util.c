@@ -10021,6 +10021,16 @@ u16 GetBattleFormChangeTargetSpecies(u32 battler, enum FormChanges method)
                     || gBattleMons[battler].moves[3] == formChanges[i].param1)
                     targetSpecies = formChanges[i].targetSpecies;
                 break;
+            case FORM_CHANGE_MOVE:
+                {
+                    bool32 hasMove = (gBattleMons[battler].moves[0] == formChanges[i].param1
+                        || gBattleMons[battler].moves[1] == formChanges[i].param1
+                        || gBattleMons[battler].moves[2] == formChanges[i].param1
+                        || gBattleMons[battler].moves[3] == formChanges[i].param1);
+                    if (hasMove != (bool32)formChanges[i].param2)
+                        targetSpecies = formChanges[i].targetSpecies;
+                }
+                break;
             case FORM_CHANGE_BATTLE_SWITCH:
                 if (formChanges[i].param1 == GetBattlerAbility(battler) || formChanges[i].param1 == ABILITY_NONE)
                     targetSpecies = formChanges[i].targetSpecies;

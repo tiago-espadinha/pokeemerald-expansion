@@ -21127,6 +21127,23 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_MalignantChain,
     },
 
+    [MOVE_UNOWN_BLAST] =
+    {
+        .name = COMPOUND_STRING("Unown Blast"),
+        .description = COMPOUND_STRING(
+            "This move always hits the\n"
+            "target supereffectively."),
+        .effect = EFFECT_HIT,
+        .power = 100,
+        .type = TYPE_PSYCHIC,
+        .accuracy = 0,
+        .pp = 15,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .battleAnimScript = gBattleAnimMove_BehemothBlade,
+    },
+
     // Z-Moves
     [MOVE_BREAKNECK_BLITZ] =
     {
