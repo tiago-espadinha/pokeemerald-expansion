@@ -5756,12 +5756,12 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
     {
         .name = COMPOUND_STRING("Present"),
         .description = COMPOUND_STRING(
-            "A gift in the form of a\n"
-            "bomb. May restore HP."),
-        .effect = EFFECT_PRESENT,
-        .power = 1,
-        .type = TYPE_NORMAL,
-        .accuracy = 90,
+            "Explodes on foes, but\n"
+            "restores ally's HP."),
+        .effect = EFFECT_HIT_ENEMY_HEAL_ALLY,
+        .power = 90,
+        .type = TYPE_ICE,
+        .accuracy = 100,
         .pp = 15,
         .target = MOVE_TARGET_SELECTED,
         .priority = 0,
