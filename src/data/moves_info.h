@@ -21127,21 +21127,21 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_MalignantChain,
     },
 
-    [MOVE_UNOWN_BLAST] =
+    [MOVE_RUNE_POWER] =
     {
-        .name = COMPOUND_STRING("Unown Blast"),
+        .name = COMPOUND_STRING("Rune Power"),
         .description = COMPOUND_STRING(
             "This move always hits the\n"
             "target supereffectively."),
-        .effect = EFFECT_HIT,
-        .power = 100,
+        .effect = EFFECT_RUNE_POWER,
+        .power = 90,
         .type = TYPE_PSYCHIC,
         .accuracy = 0,
         .pp = 15,
         .target = MOVE_TARGET_SELECTED,
         .priority = 0,
         .category = DAMAGE_CATEGORY_SPECIAL,
-        .battleAnimScript = gBattleAnimMove_BehemothBlade,
+        .battleAnimScript = gBattleAnimMove_TeraBlast,
     },
 
     // Z-Moves

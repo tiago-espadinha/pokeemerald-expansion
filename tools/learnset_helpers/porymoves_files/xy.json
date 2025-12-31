@@ -23530,7 +23530,9 @@
       "MOVE_HIDDEN_POWER"
     ],
     "EggMoves": [],
-    "TutorMoves": []
+    "TutorMoves": [
+      "MOVE_RUNE_POWER"
+    ]
   },
   "WOBBUFFET": {
     "LevelMoves": [

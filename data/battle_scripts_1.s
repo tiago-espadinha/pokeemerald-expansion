@@ -9095,6 +9095,12 @@ BattleScript_RemoveTerrain::
 	waitmessage B_WAIT_TIME_LONG
 	return
 
+BattleScript_EffectRunePower::
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_MOVECHANGEDTYPE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_EffectHit
+
 BattleScript_Pickpocket::
 	call BattleScript_AbilityPopUp
 	jumpifability BS_ATTACKER, ABILITY_STICKY_HOLD, BattleScript_PickpocketPrevented

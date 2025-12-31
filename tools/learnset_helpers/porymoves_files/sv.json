@@ -18194,11 +18194,18 @@
     "TutorMoves": []
   },
   "UNOWN": {
-    "LevelMoves": [],
+    "LevelMoves": [
+      {
+        "Level": 1,
+        "Move": "MOVE_HIDDEN_POWER"
+      }
+    ],
     "PreEvoMoves": [],
     "TMMoves": [],
     "EggMoves": [],
-    "TutorMoves": []
+    "TutorMoves": [
+      "MOVE_RUNE_POWER"
+    ]
   },
   "WOBBUFFET": {
     "LevelMoves": [],

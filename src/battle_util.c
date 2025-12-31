@@ -9697,6 +9697,19 @@ uq4_12_t CalcTypeEffectivenessMultiplier(struct DamageContext *ctx)
 
     if (ctx->move != MOVE_STRUGGLE && ctx->moveType != TYPE_MYSTERY)
     {
+        if (GetMoveEffect(ctx->move) == EFFECT_RUNE_POWER && ctx->battlerDef < MAX_BATTLERS_COUNT)
+        {
+            u16 targetSpecies = gBattleMons[ctx->battlerDef].species;
+            u8 seType = GetSupereffectiveTypeAgainstSpecies(targetSpecies);
+            if (seType != TYPE_MYSTERY)
+            {
+                ctx->moveType = seType;
+                
+                PREPARE_MOVE_BUFFER(gBattleTextBuff2, ctx->move);
+                PREPARE_TYPE_BUFFER(gBattleTextBuff1, seType);
+            }
+        }
+
         modifier = CalcTypeEffectivenessMultiplierInternal(ctx, modifier);
         if (GetMoveEffect(ctx->move) == EFFECT_TWO_TYPED_MOVE)
         {
@@ -9717,6 +9730,13 @@ uq4_12_t CalcPartyMonTypeEffectivenessMultiplier(u16 move, u16 speciesDef, u16 a
 
     if (move != MOVE_STRUGGLE && moveType != TYPE_MYSTERY)
     {
+        if (GetMoveEffect(move) == EFFECT_RUNE_POWER)
+        {
+            u8 seType = GetSupereffectiveTypeAgainstSpecies(speciesDef);
+            if (seType != TYPE_MYSTERY)
+                moveType = seType;
+        }
+
         struct DamageContext ctx = {0};
         ctx.move = move;
         ctx.moveType = moveType;
@@ -9783,6 +9803,45 @@ uq4_12_t GetTypeModifier(u32 atkType, u32 defType)
     if (B_FLAG_INVERSE_BATTLE != 0 && FlagGet(B_FLAG_INVERSE_BATTLE))
         return GetInverseTypeMultiplier(gTypeEffectivenessTable[atkType][defType]);
     return gTypeEffectivenessTable[atkType][defType];
+}
+
+u8 GetSupereffectiveTypeAgainstSpecies(u16 speciesDef)
+{
+    u8 defType1 = GetSpeciesType(speciesDef, 0);
+    u8 defType2 = GetSpeciesType(speciesDef, 1);
+
+    uq4_12_t bestMod = UQ_4_12(1.0);
+    u8 bestTypes[NUMBER_OF_MON_TYPES];
+    u8 bestCount = 0;
+
+    for (u8 atkType = 0; atkType < NUMBER_OF_MON_TYPES; atkType++)
+    {
+        if (atkType == TYPE_MYSTERY || atkType == TYPE_NONE)
+            continue;
+
+        uq4_12_t mod = GetTypeModifier(atkType, defType1);
+        if (defType2 != defType1 && defType2 != TYPE_MYSTERY)
+            mod = uq4_12_multiply(mod, GetTypeModifier(atkType, defType2));
+
+        if (mod > bestMod)
+        {
+            bestMod = mod;
+            bestTypes[0] = atkType;
+            bestCount = 1;
+        }
+        else if (mod == bestMod && mod > UQ_4_12(1.0))
+        {
+            bestTypes[bestCount++] = atkType;
+        }
+    }
+
+    if (bestMod >= UQ_4_12(2.0) && bestCount > 0)
+    {
+        u32 idx = RandomUniform(RNG_NONE, 0, bestCount - 1);
+        return bestTypes[idx];
+    }
+
+    return TYPE_MYSTERY;
 }
 
 s32 GetStealthHazardDamageByTypesAndHP(enum TypeSideHazard hazardType, u8 type1, u8 type2, u32 maxHp)

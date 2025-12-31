@@ -24765,7 +24765,9 @@
     "PreEvoMoves": [],
     "TMMoves": [],
     "EggMoves": [],
-    "TutorMoves": []
+    "TutorMoves": [
+      "MOVE_RUNE_POWER"
+    ]
   },
   "WOBBUFFET": {
     "LevelMoves": [
