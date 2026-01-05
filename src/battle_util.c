@@ -9042,45 +9042,6 @@ u8 GetSupereffectiveTypeAgainstSpecies(u16 speciesDef)
     return TYPE_MYSTERY;
 }
 
-u8 GetSupereffectiveTypeAgainstSpecies(u16 speciesDef)
-{
-    u8 defType1 = GetSpeciesType(speciesDef, 0);
-    u8 defType2 = GetSpeciesType(speciesDef, 1);
-
-    uq4_12_t bestMod = UQ_4_12(1.0);
-    u8 bestTypes[NUMBER_OF_MON_TYPES];
-    u8 bestCount = 0;
-
-    for (u8 atkType = 0; atkType < NUMBER_OF_MON_TYPES; atkType++)
-    {
-        if (atkType == TYPE_MYSTERY || atkType == TYPE_NONE)
-            continue;
-
-        uq4_12_t mod = GetTypeModifier(atkType, defType1);
-        if (defType2 != defType1 && defType2 != TYPE_MYSTERY)
-            mod = uq4_12_multiply(mod, GetTypeModifier(atkType, defType2));
-
-        if (mod > bestMod)
-        {
-            bestMod = mod;
-            bestTypes[0] = atkType;
-            bestCount = 1;
-        }
-        else if (mod == bestMod && mod > UQ_4_12(1.0))
-        {
-            bestTypes[bestCount++] = atkType;
-        }
-    }
-
-    if (bestMod >= UQ_4_12(2.0) && bestCount > 0)
-    {
-        u32 idx = RandomUniform(RNG_NONE, 0, bestCount - 1);
-        return bestTypes[idx];
-    }
-
-    return TYPE_MYSTERY;
-}
-
 s32 GetStealthHazardDamageByTypesAndHP(enum TypeSideHazard hazardType, enum Type type1, enum Type type2, u32 maxHp)
 {
     s32 dmg = 0;
