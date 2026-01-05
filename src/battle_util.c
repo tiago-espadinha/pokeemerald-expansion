@@ -4259,7 +4259,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             break;
             case ABILITY_FORECAST:
             // checks if user is holding a damp rock it sets rain like the drizzle ability, likewise for the remaing weather stones
-            if (GetBattlerHoldEffectIgnoreAbility(battler, TRUE) == HOLD_EFFECT_DAMP_ROCK)
+            if (GetBattlerHoldEffectIgnoreAbility(battler) == HOLD_EFFECT_DAMP_ROCK)
             {
                 if (TryChangeBattleWeather(battler, BATTLE_WEATHER_RAIN, TRUE))
                 {
@@ -4267,7 +4267,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                     effect++;
                 }
             }
-            else if (GetBattlerHoldEffectIgnoreAbility(battler, TRUE) == HOLD_EFFECT_HEAT_ROCK)
+            else if (GetBattlerHoldEffectIgnoreAbility(battler) == HOLD_EFFECT_HEAT_ROCK)
             {
                 if (TryChangeBattleWeather(battler, BATTLE_WEATHER_SUN, TRUE))
                 {
@@ -4275,20 +4275,20 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                     effect++;
                 }
             }
-            else if (GetBattlerHoldEffectIgnoreAbility(battler, TRUE) == HOLD_EFFECT_ICY_ROCK)
+            else if (GetBattlerHoldEffectIgnoreAbility(battler) == HOLD_EFFECT_ICY_ROCK)
             {
-                if (GetGenConfig(GEN_SNOW_WARNING) >= GEN_9 && TryChangeBattleWeather(battler, BATTLE_WEATHER_SNOW, TRUE))
+                if (GetConfig(CONFIG_SNOW_WARNING) >= GEN_9 && TryChangeBattleWeather(battler, BATTLE_WEATHER_SNOW, TRUE))
                 {
                     BattleScriptPushCursorAndCallback(BattleScript_SnowWarningActivatesSnow);
                     effect++;
                 }
-                else if (GetGenConfig(GEN_SNOW_WARNING) < GEN_9 && TryChangeBattleWeather(battler, BATTLE_WEATHER_HAIL, TRUE))
+                else if (GetConfig(CONFIG_SNOW_WARNING) < GEN_9 && TryChangeBattleWeather(battler, BATTLE_WEATHER_HAIL, TRUE))
                 {
                     BattleScriptPushCursorAndCallback(BattleScript_SnowWarningActivatesHail);
                     effect++;
                 }
             }
-            else if (GetBattlerHoldEffectIgnoreAbility(battler, TRUE) == HOLD_EFFECT_SMOOTH_ROCK)
+            else if (GetBattlerHoldEffectIgnoreAbility(battler) == HOLD_EFFECT_SMOOTH_ROCK)
             {
                 if (TryChangeBattleWeather(battler, BATTLE_WEATHER_SANDSTORM, TRUE))
                 {
