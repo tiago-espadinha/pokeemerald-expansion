@@ -4053,7 +4053,8 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
         case ABILITY_SLOW_START:
             if (!gSpecialStatuses[battler].switchInAbilityDone)
             {
-                gDisableStructs[battler].slowStartTimer = 5;
+                if (gDisableStructs[battler].slowStartTimer == 0)
+                    gDisableStructs[battler].slowStartTimer = 5;
                 gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SWITCHIN_SLOWSTART;
                 gSpecialStatuses[battler].switchInAbilityDone = TRUE;
                 BattleScriptPushCursorAndCallback(BattleScript_SwitchInAbilityMsg);
@@ -7461,6 +7462,14 @@ static inline u32 CalcMoveBasePowerAfterModifiers(struct DamageContext *ctx)
     case ABILITY_SUPREME_OVERLORD:
         modifier = uq4_12_multiply(modifier, GetSupremeOverlordModifier(battlerAtk));
         break;
+    case ABILITY_TURBOBLAZE:
+        if (moveType == TYPE_FIRE || moveType == TYPE_DRAGON)
+            modifier = uq4_12_multiply(modifier, UQ_4_12(1.25));
+        break;
+    case ABILITY_TERAVOLT:
+        if (moveType == TYPE_ELECTRIC || moveType == TYPE_DRAGON)
+            modifier = uq4_12_multiply(modifier, UQ_4_12(1.25));
+        break;        
     default:
         break;
     }
@@ -8701,7 +8710,7 @@ static inline void MulByTypeEffectiveness(struct DamageContext *ctx, uq4_12_t *m
         mod = UQ_4_12(1.0);
     }
     else if ((ctx->moveType == TYPE_FIGHTING || ctx->moveType == TYPE_NORMAL) && defType == TYPE_GHOST
-        && (ctx->abilityAtk == ABILITY_SCRAPPY || ctx->abilityAtk == ABILITY_MINDS_EYE)
+        && (ctx->abilityAtk == ABILITY_SCRAPPY || ctx->abilityAtk == ABILITY_MINDS_EYE || ctx->abilityAtk == ABILITY_NORMALIZE)
         && mod == UQ_4_12(0.0))
     {
         mod = UQ_4_12(1.0);
@@ -10918,9 +10927,12 @@ u32 GetTotalAccuracy(u32 battlerAtk, u32 battlerDef, u32 move, enum Ability atkA
     case ABILITY_VICTORY_STAR:
         calc = (calc * 110) / 100; // 1.1 victory star boost
         break;
+    case ABILITY_ILLUMINATE:
+        calc = (calc * 130) / 100; // 1.3 illuminate boost
+        break;
     case ABILITY_HUSTLE:
         if (IsBattleMovePhysical(move))
-            calc = (calc * 80) / 100; // 1.2 hustle loss
+            calc = (calc * 90) / 100; // 1.2 hustle loss
         break;
     default:
         break;
